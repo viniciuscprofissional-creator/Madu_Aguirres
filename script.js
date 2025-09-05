@@ -1,112 +1,79 @@
-// =====================
-// Evita jump inicial ao carregar
-// =====================
-window.addEventListener('load', () => {
-  if(window.location.hash){
-    window.scrollTo(0,0);
-    history.replaceState(null, null, ' ');
+gsap.registerPlugin(ScrollTrigger);
+
+// Garante que a página comece no topo ao atualizar
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
+// Hero - fade-in inicial com leve escala
+gsap.from(".hero h1", { y:50, opacity:0, scale:0.95, duration:1, ease:"power2.out" });
+gsap.from(".hero p", { y:50, opacity:0, scale:0.95, duration:1, delay:0.3, ease:"power2.out" });
+
+// Hero - efeito parallax na imagem de fundo
+gsap.to(".hero", {
+  backgroundPosition: "50% 30%", 
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero",
+    start: "top top",
+    end: "bottom top",
+    scrub: true
   }
 });
 
-// =====================
-// Scroll suave para links da navbar
-// =====================
+// Seções - efeito de subida com profundidade e stagger nos elementos internos
+gsap.utils.toArray('.full-screen').forEach((section, i) => {
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.fromTo(section, 
+        { y: 80, opacity:0, scale:0.98 }, 
+        { y:0, opacity:1, scale:1, duration:1, ease:"power3.out", delay: i*0.1 }
+      );
+      const elems = section.querySelectorAll('h2, p, .portfolio-item, .testimonial, li');
+      gsap.fromTo(elems, 
+        { y:40, opacity:0 }, 
+        { y:0, opacity:1, duration:1, stagger:0.25, ease:"power3.out", delay: i*0.1 }
+      );
+    }
+  });
+});
+
+// Scroll suave navbar
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', function(e) {
     e.preventDefault();
     const targetId = this.getAttribute('href').replace('#','');
     const targetSection = document.getElementById(targetId);
     if(targetSection){
-      const yOffset = -80; // ajuste da altura da navbar
+      const yOffset = -80; 
       const y = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   });
 });
 
-// =====================
-// Fade-in ao rolar
-// =====================
-const faders = document.querySelectorAll('.fade-in');
-const appearOptions = { threshold: 0.3, rootMargin: "0px 0px -50px 0px" };
-const appearOnScroll = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if(!entry.isIntersecting) return;
-    entry.target.classList.add('visible');
-    observer.unobserve(entry.target);
-  });
-}, appearOptions);
-faders.forEach(fader => appearOnScroll.observe(fader));
+// Botão voltar ao topo - aparece apenas no final da página
+const topBtn = document.querySelector(".back-to-top");
 
-// =====================
-// Botão voltar ao topo (aparece só no final da página)
-// =====================
-const topBtn = document.getElementById("topBtn");
-window.addEventListener('scroll', () => {
-  const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-  if(window.scrollY >= scrollableHeight - 50){
-    topBtn.classList.add("show");
+function checkTopBtn() {
+  const scrollPosition = window.scrollY + window.innerHeight;
+  const pageHeight = document.documentElement.scrollHeight;
+
+  // Mostra botão somente quando chegar ao fim da página
+  if(scrollPosition >= pageHeight - 5){ 
+    topBtn.style.display = "flex";
   } else {
-    topBtn.classList.remove("show");
-  }
-});
-topBtn.addEventListener("click", () => { 
-  window.scrollTo({ top: 0, behavior: 'smooth' }); 
-});
-
-// =====================
-// Partículas de fundo
-// =====================
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const particlesArray = [];
-const colors = ['#f6d365','#fda085','#fff'];
-
-class Particle {
-  constructor(){
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 3 + 1;
-    this.speedX = Math.random() * 0.5 - 0.25;
-    this.speedY = Math.random() * 0.5 - 0.25;
-    this.color = colors[Math.floor(Math.random() * colors.length)];
-  }
-  update(){
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if(this.x > canvas.width) this.x = 0;
-    if(this.x < 0) this.x = canvas.width;
-    if(this.y > canvas.height) this.y = 0;
-    if(this.y < 0) this.y = canvas.height;
-  }
-  draw(){
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fill();
+    topBtn.style.display = "none";
   }
 }
 
-function initParticles(){
-  particlesArray.length = 0;
-  const number = Math.floor(canvas.width/10);
-  for(let i=0;i<number;i++) particlesArray.push(new Particle());
-}
+window.addEventListener('scroll', checkTopBtn);
+window.addEventListener('resize', checkTopBtn);
+window.addEventListener('load', checkTopBtn);
 
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particlesArray.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animateParticles);
-}
-
-window.addEventListener('resize', ()=>{
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  initParticles();
+// Clique no botão
+topBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
-
-initParticles();
-animateParticles();
