@@ -2,21 +2,25 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Madu Aguirres</title>
 
-  
-  <!-- Favicon -->
-  <link rel="icon" href="icon.jpg"type="image/jpg">
+  <!-- Ícone da aba -->
+  <link rel="icon" href="icon.jpg" type="image/jpg">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- GSAP + ScrollTrigger CDN -->
+  <!-- GSAP + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
@@ -26,7 +30,14 @@
   <nav>
     <div class="nav-container">
       <div class="logo">Madu Aguirres</div>
-      <ul class="nav-links">
+
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#portfolio">Portfólio</a></li>
         <li><a href="#depoimentos">Depoimentos</a></li>
@@ -50,9 +61,11 @@
   <!-- Portfólio -->
   <section id="portfolio" class="full-screen fade-up">
     <h2>Portfólio</h2>
-    <div class="portfolio-item">📸 Fotografia Criativa</div>
-    <div class="portfolio-item">🎨 Artes Digitais</div>
-    <div class="portfolio-item">✍️ Textos Publicitários</div>
+    <div class="portfolio-container">
+      <div class="portfolio-item">📸 Fotografia Criativa</div>
+      <div class="portfolio-item">🎨 Artes Digitais</div>
+      <div class="portfolio-item">✍️ Textos Publicitários</div>
+    </div>
   </section>
 
   <!-- Depoimentos -->
@@ -72,26 +85,35 @@
     </div>
   </section>
 
-  <!-- Contato -->
-  <section id="contato" class="full-screen fade-up">
-    <h2>Contato</h2>
-    <ul>
-      <li><a href="https://www.youtube.com/@maduaguirres" target="_blank">YouTube</a></li>
-      <li><a href="https://www.instagram.com/madu_aguirres" target="_blank">Instagram</a></li>
-      <li>Email: maduaguirres@gmail.com</li>
-    </ul>
-  </section>
-
   <!-- Botão voltar ao topo -->
   <button class="back-to-top">⬆</button>
 
-  <!-- Footer -->
-  <footer class="full-screen fade-up">
-    <p>© 2025 - Criado com ❤ por Vinicius Carvalho</p>
+  <!-- Footer + Contato -->
+  <footer>
+    <section id="contato" class="footer-contact">
+      <h2>Contato</h2>
+      <ul class="social-links">
+        <li><a href="https://www.youtube.com/@maduaguirres" target="_blank"><i class="fab fa-youtube"></i></a></li>
+        <li><a href="https://www.instagram.com/madu_aguirres" target="_blank"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="mailto:maduaguirres@gmail.com"><i class="fas fa-envelope"></i></a></li>
+      </ul>
+    </section>
+    <p>© 2025 - Feito por Vinicius C</p>
   </footer>
 
   <!-- JS -->
   <script src="script.js"></script>
 
+  <!-- Script menu toggle -->
+  <script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      menuToggle.classList.toggle("open");
+      document.body.classList.toggle("menu-open");
+    });
+  </script>
 </body>
 </html>

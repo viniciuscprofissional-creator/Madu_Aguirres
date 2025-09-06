@@ -1,0 +1,9 @@
+tópicos
+
+Melhorias para mobile 
+Cards mais responsivos e chamativos para usuarios
+rodapé com "feito por vinicius c" 
+Menu para abrir a aba com os botões "Sobre mim, Portifólio e etc
+Substituir o youtube e instagram por icones das respectivas redes.
+o botão do email levar para a aba escrever email. 
+
