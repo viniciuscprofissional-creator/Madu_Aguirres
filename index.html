@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>Madu Aguirres</title>
 
   <!-- Ícone da aba -->
@@ -21,8 +20,11 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <!-- JS -->
+  <script src="script.js" defer></script>
 </head>
 <body>
 
@@ -30,13 +32,6 @@
   <nav>
     <div class="nav-container">
       <div class="logo">Madu Aguirres</div>
-
-      <div class="menu-toggle" id="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
       <ul class="nav-links" id="nav-links">
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#portfolio">Portfólio</a></li>
@@ -85,9 +80,6 @@
     </div>
   </section>
 
-  <!-- Botão voltar ao topo -->
-  <button class="back-to-top">⬆</button>
-
   <!-- Footer + Contato -->
   <footer>
     <section id="contato" class="footer-contact">
@@ -101,19 +93,8 @@
     <p>© 2025 - Feito por Vinicius C</p>
   </footer>
 
-  <!-- JS -->
-  <script src="script.js"></script>
+  <!-- Botão voltar ao topo -->
+  <button class="back-to-top">⬆</button>
 
-  <!-- Script menu toggle -->
-  <script>
-    const menuToggle = document.getElementById("menu-toggle");
-    const navLinks = document.getElementById("nav-links");
-
-    menuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-      menuToggle.classList.toggle("open");
-      document.body.classList.toggle("menu-open");
-    });
-  </script>
 </body>
 </html>
